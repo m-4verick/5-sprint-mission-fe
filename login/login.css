@@ -1,0 +1,124 @@
+@import "../colorpal.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+}
+.main-wrapper {
+  min-width: 640px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 231px;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+/***** 로고 *****/
+.logo-img{
+  display: flex;
+  justify-content: center;
+}
+
+
+/***** 폼 *****/
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+
+}
+.form-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+.form-content label {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+}
+.form-content input {
+  width: 100%;
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: none;
+  background-color: var(--F3F4F6);
+  margin-top: 16px;
+}
+.form-content input::placeholder {
+  color: var(--9CA3AF);
+  font-size: 16px;
+}
+.form-content input:focus {
+  outline-color: var(--3692FF);
+}
+
+.form-button {
+  margin-top: 24px;
+}
+.form-button button{
+  width: 100%;
+  background-color: var(--9CA3AF);
+  border: none;
+  border-radius: 40px;
+  padding: 16px 124px;
+  font-size: 20px;
+  color: var(--F3F4F6);
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.form-button button:hover {
+  background-color: var(--3692FF);
+}
+
+
+/***** SNS 로그인 *****/
+.snslogin-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--E6F2FF);
+  border-radius: 8px;
+  padding: 16px 23px;
+  margin-top: 24px;
+  color: var(--1F2937);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 26px;
+}
+
+.snslogin-list {
+  display: flex;
+  gap: 16px;
+
+}
+.snslogin-list img {
+  width: 42px;
+}
+
+
+/***** 회원가입 페이지 이동 *****/
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.signup-wrapper a {
+  color: var(--3692FF);
+}
