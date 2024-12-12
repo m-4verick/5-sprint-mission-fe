@@ -41,6 +41,7 @@ button {
   display: flex;
   flex-direction: column;
   margin-top: 24px;
+  position: relative
 }
 .form-content label {
   font-size: 18px;
@@ -65,6 +66,14 @@ button {
 
 }
 
+.form-content img {
+  width: 24px;
+  position: absolute;
+  top: 54px;
+  right: 24px;
+  cursor: pointer;
+}
+
 .form-button {
   margin-top: 24px;
 }
@@ -83,7 +92,6 @@ button {
 .form-button button:hover {
   background-color: var(--3692FF);
 }
-
 
 /***** SNS 로그인 *****/
 .snslogin-wrapper {
