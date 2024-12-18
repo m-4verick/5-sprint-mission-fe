@@ -91,3 +91,21 @@
   /* 밑줄과 텍스트 사이 간격을 조정하고 싶다면 text-underline-offset을 사용하면 돼요. */
   text-underline-offset: 2px;
 }
+
+
+.emailEmpty,
+.emailWrong,
+.pwWrong,
+.pwEmpty,
+.nickEmpty,
+.nickFour,
+.pwCEmpty,
+.pwCWrong {
+  margin-left: 16px;
+  margin-top: 8px;
+
+  display: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #F74747;
+}
