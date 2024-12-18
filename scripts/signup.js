@@ -140,7 +140,6 @@ toggleCBtn.addEventListener('click', e => {
         passwordC.type = "password";
     }
 })
-
 // 이메일과 패스워드가 모두 정상적으로 입력되었다면 로그인 버튼 활성화
 function activateSignUpButton() {
     if ( (checkEmail === true) && (checkPw === true) && (checkNick === true) && (checkPwC === true) ) {
@@ -150,7 +149,6 @@ function activateSignUpButton() {
         return false;
     }
 }
-
 // USER_DATA에 중복된 이메일이 있는 경우 ALERT.
 // 회원가입 성공적으로 끝났다면 login 페이지로 이동
 signupBtn.addEventListener('click', e => {

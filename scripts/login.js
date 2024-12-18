@@ -16,14 +16,12 @@ const pwEmpty = document.querySelector('.pwEmpty');
 const loginBtn = document.querySelector('.button');
 const toggleBtn = document.querySelector('.password-toggle-button');
 
-
 // 이메일, 패스워드 정상 입력 받았는지 확인용 변수
 let checkEmail = false;
 let checkPw = false;
 
 // 로그인 버튼 비활성화
 loginBtn.disabled = true;
-
 // 이메일 비어있는지 확인 후 @ 포함됐는지 검증
 email.addEventListener('input', e => {
 
@@ -47,7 +45,6 @@ email.addEventListener('input', e => {
         activateLoginBtn()
     }
 })
-
 // 패스워드 비어있는지 확인 후 8자 이상인지 검증
 password.addEventListener('input', e => {
 
@@ -72,7 +69,6 @@ password.addEventListener('input', e => {
         activateLoginBtn()
     }
 })
-
 // 비밀번호 눈 아이콘 구현
 toggleBtn.addEventListener('click', e => {
     if(password.type === "password"){
@@ -81,7 +77,6 @@ toggleBtn.addEventListener('click', e => {
         password.type = "password";
     }
 })
-
 // 이메일과 패스워드가 모두 정상적으로 입력되었다면 로그인 버튼 활성화
 function activateLoginBtn() {
     if( (checkEmail === true) && (checkPw === true) ){
@@ -91,8 +86,6 @@ function activateLoginBtn() {
         return false;
     }
 }
-
-
 // 로그인 버튼을 눌렀을 때, 입력된 데이터가 USER_DATA의 정보와 일치하는 경우 items 페이지로 이동, 그렇지 않은 경우 ALERT
 loginBtn.addEventListener('click', e => {
 
