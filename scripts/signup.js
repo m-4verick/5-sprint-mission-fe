@@ -183,11 +183,7 @@ toggleCBtn.addEventListener('click', e => {
 
 // 이메일과 패스워드가 모두 정상적으로 입력되었다면 로그인 버튼 활성화
 function activateSignUpButton() {
-    if ((checkEmail && checkPw) && (checkPwC && checkNick)) { //변수로 만들어서 처리
-        signupBtn.disabled = false;
-    } else {
-        signupBtn.disabled = true;
-    }
+    signupBtn.disabled = !((checkEmail && checkPw) && (checkPwC && checkNick));
 }
 
 // USER_DATA에 중복된 이메일이 있는 경우 ALERT. & 정상 회원가입됐다면 login.html로 이동.

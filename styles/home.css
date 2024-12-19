@@ -12,6 +12,9 @@
   background-image: url("../images/home/hero-image.png");
 }
 
+.wrapper h1 {
+  width: 400px;
+}
 #features {
   padding-bottom: 138px;
 }
@@ -38,12 +41,13 @@
   gap: 5%;
 }
 
+.feature h1 {
+
+  width: 300px;
+
+}
 .feature:nth-child(2) {
   text-align: right;
-}
-
-.feature-content {
-  flex: 1;
 }
 
 .feature-tag {
@@ -62,15 +66,124 @@
   margin-top: 24px;
 }
 
+.topbanner {
+  display: none;
+}
+
 
 @media (max-width: 1199px) {
-  body {
-    background-color: blue;
+  header {
+    padding: 0 24px;
   }
+  .banner {
+    height: 770px;
+    padding-top: 5rem;
+    align-items: flex-start;
+  }
+  #hero {
+    background-position: center bottom;
+    background-size: 100%;
+    width: 100%;
+  }
+  #hero .wrapper,
+  #bottomBanner .wrapper{
+    text-align: center;
+  }
+
+  .wrapper h1 {
+    width: 100%;
+  }
+
+  #bottomBanner .wrapper {
+    padding-top: 8rem;
+  }
+  #bottomBanner {
+    height: 770px;
+    background-position: center bottom;
+    background-size: 100%;
+    width: 100%;
+    font-size: 40px;
+  }
+
+  .feature {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px;
+    padding-bottom: 50px;
+  }
+  .feature img {
+    width: 100%;
+  }
+  .feature-content {
+    margin-top: 24px;
+  }
+
+  .feature:nth-child(2) .feature-content{
+    order: 2;
+  }
+
+  footer {
+    padding: 3.2rem 24px 10rem 24px;
+  }
+
 }
 
 @media (max-width: 743px) {
-  body {
-    background-color: green;
+  .banner {
+    height: 540px;
+  }
+
+  #hero .wrapper{
+
+  }
+  #hero .wrapper h1 {
+    margin: 0 auto;
+    font-size: 32px;
+    line-height: 44px;
+  }
+
+  .banner .pill-button {
+    padding: 1.6rem 10rem;
+    margin-top: 1.5rem;
+  }
+
+  #bottomBanner {
+    height: 540px;
+    font-size: 32px;
+  }
+
+  #features {
+    padding: 0;
+  }
+
+  .feature h1 {
+    font-size: 2.5rem;
+    line-height: 4rem;
+  }
+  .feature .feature-description {
+    font-size: 2rem;
+  }
+
+  #footerMenu {
+    grid-area: footerMenu;
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+  #socialMedia {
+    grid-area: socialMedia;
+    justify-self: flex-end;
+  }
+  .copyright {
+    grid-area: copyright;
+    text-align: left;
+  }
+  footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+            "footerMenu socialMedia"
+    "copyright .";
+    gap: 24px;
   }
 }
