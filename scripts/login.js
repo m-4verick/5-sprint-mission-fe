@@ -15,6 +15,8 @@ const pwWrong = document.querySelector('.pwWrong');
 const pwEmpty = document.querySelector('.pwEmpty');
 const loginBtn = document.querySelector('.button');
 const toggleBtn = document.querySelector('.password-toggle-button');
+const modalButton = document.querySelector('.modal-button');
+const popUp = document.querySelector('.popUp-wrapper');
 
 // 이메일, 패스워드 정상 입력 받았는지 확인용 변수
 let checkEmail = false;
@@ -87,15 +89,27 @@ function activateLoginBtn() {
 }
 // 로그인 버튼을 눌렀을 때, 입력된 데이터가 USER_DATA의 정보와 일치하는 경우 items 페이지로 이동, 그렇지 않은 경우 ALERT
 loginBtn.addEventListener('click', e => {
-    let validate = false;
+
+    let validate = 0;
+
     for(let i = 0; i < USER_DATA.length; i++){
         if( (email.value === USER_DATA[i].email) && (password.value === USER_DATA[i].password) ){
-            validate = true;
+            validate += 1;
             window.location.href = "../items.html";
         }
     }
 
-    if(validate === false){
-        alert("APTAPT"); // 일치되는 정보 없으면 모달창 ///////////공사 예정 ///////
+        if( (email.value === window.localStorage.getItem(email.value)) && (password.value === window.localStorage.getItem(password.value)) ) {
+            validate += 1;
+            window.location.href = "../items.html";
+        }
+
+    if(validate === 0){
+        console.log("validate failed");
+        popUp.style.display = "block";
     }
+})
+
+modalButton.addEventListener('click', e => {
+    popUp.style.display = "none";
 })

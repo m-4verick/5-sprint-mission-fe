@@ -23,6 +23,8 @@ const toggleBtn = document.querySelector('.password-toggle-button');
 const toggleCBtn = document.querySelector('.toggleC');
 const nickEmpty = document.querySelector('.nickEmpty');
 const nickFour = document.querySelector('.nickFour');
+const modalButton = document.querySelector('.modal-button');
+const popUp = document.querySelector('.popUp-wrapper');
 
 // 이메일, 패스워드 정상 입력 받았는지 확인용 변수
 let checkEmail = false;
@@ -187,21 +189,31 @@ function activateSignUpButton() {
 }
 
 // USER_DATA에 중복된 이메일이 있는 경우 ALERT. & 정상 회원가입됐다면 login.html로 이동.
-let validate = true;
 
-signupBtn.addEventListener('click', e => {
-    for (let i = 0; i < USER_DATA.length; i++) {
-        const userData = USER_DATA[i];
-        const compared = (email.value === userData.email);
+signupBtn.addEventListener('click',
+    e => {
+        let validate = 0;
 
-        if (compared) {
-            validate = false;
+        for (let i = 0; i < USER_DATA.length; i++) {
+            const userData = USER_DATA[i];
+
+            if (email.value === userData.email) {
+                validate += 1;
+            }
         }
-    }
 
-    if (validate) {
-        window.location.href = "../login.html";
-    } else {
-        alert("THATS NONO"); //////////////////// 모달창 업데이트
-    }
+        if (validate === 0) {
+            window.localStorage.setItem(email.value, email.value);
+            window.localStorage.setItem(password.value, password.value);
+            console.log(window.localStorage.getItem(email.value));
+            console.log(window.localStorage.getItem(password.value));
+            window.location.href = "../login.html";
+        } else {
+            popUp.style.display = "block";
+        }
+    })
+
+
+modalButton.addEventListener('click', e => {
+    popUp.style.display = "none";
 })

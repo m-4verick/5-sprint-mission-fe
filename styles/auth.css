@@ -83,6 +83,7 @@
   font-weight: 500;
   font-size: 15px;
   text-align: center;
+
 }
 
 .auth-switch a {
@@ -111,6 +112,41 @@
   color: #F74747;
 }
 
+.popUp-wrapper {
+  display: none;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 9;
+  background-color: rgba(0,0,0, 0.7);
+}
+
+.popUp {
+  position: absolute;
+  width: 55rem;
+  height: 25rem;
+  font-weight: 500;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  text-align: center;
+  padding-top: 10rem;
+  font-size: 16px;
+  z-index: 9999;
+}
+
+.popUp button {
+  background-color: var(--blue);
+  position: absolute;
+  right: 28px;
+  bottom: 28px;
+  padding: 12px 23px;
+  border-radius: 8px;
+  color: #FFFFFF;
+}
 
 @media (max-width: 1199px) {
 
@@ -138,5 +174,11 @@
     width: 200px;
   }
 
+  .popUp {
+    width: 30rem;
+    height: 20rem;
+    padding-top: 5rem;
+    top: 30%;
+  }
 
 }
