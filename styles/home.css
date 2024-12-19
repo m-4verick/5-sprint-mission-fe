@@ -63,17 +63,14 @@
 }
 
 
-
-
-
-@media (max-width: 1199px){
-  body{
-    background-color: yellow;
+@media (max-width: 1199px) {
+  body {
+    background-color: blue;
   }
 }
 
-@media (max-width: 743px){
-  body{
+@media (max-width: 743px) {
+  body {
     background-color: green;
   }
 }

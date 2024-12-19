@@ -101,7 +101,7 @@
 .nickFour,
 .pwCEmpty,
 .pwCWrong,
-.pwCEight{
+.pwCEight {
   margin-left: 16px;
   margin-top: 8px;
 
@@ -112,15 +112,31 @@
 }
 
 
+@media (max-width: 1199px) {
 
-@media (max-width: 1199px){
-  body{
-    background-color: yellow;
-  }
 }
 
-@media (max-width: 743px){
-  body{
-    background-color: green;
+@media (max-width: 743px) {
+  body {
+    display: flex;
+    justify-content: center;
   }
+  .auth-container {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 14px;
+
+  }
+
+  .logo-home-button-wrapper {
+    margin-top: 48px;
+    margin-bottom: 40px;
+  }
+  .logo-home-button-wrapper img {
+    width: 200px;
+  }
+
+
 }
