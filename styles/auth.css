@@ -100,7 +100,8 @@
 .nickEmpty,
 .nickFour,
 .pwCEmpty,
-.pwCWrong {
+.pwCWrong,
+.pwCEight{
   margin-left: 16px;
   margin-top: 8px;
 
@@ -108,4 +109,18 @@
   font-size: 15px;
   font-weight: 600;
   color: #F74747;
+}
+
+
+
+@media (max-width: 1199px){
+  body{
+    background-color: yellow;
+  }
+}
+
+@media (max-width: 743px){
+  body{
+    background-color: green;
+  }
 }

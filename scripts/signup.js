@@ -17,6 +17,7 @@ const pwWrong = document.querySelector('.pwWrong');
 const pwEmpty = document.querySelector('.pwEmpty');
 const pwCWrong = document.querySelector('.pwCWrong');
 const pwCEmpty = document.querySelector('.pwCEmpty');
+const pwCEight = document.querySelector('.pwCEight');
 const signupBtn = document.querySelector('.button');
 const toggleBtn = document.querySelector('.password-toggle-button');
 const toggleCBtn = document.querySelector('.toggleC');
@@ -32,19 +33,26 @@ let checkPwC = false;
 // 로그인 버튼 비활성화
 signupBtn.disabled = true;
 
+
+// @@@@@@@@@@@@@@@@@@@@@@@@ 함수로 만들어라 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 // 이메일 비어있는지 확인 후 @ 포함됐는지 검증
 email.addEventListener('focusout', e => {
-
-    if (e.target.value === "") {
+    if (!e.target.value) { //이렇게 바꿔봅시다.
         emailWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
         emailEmpty.style.display = "block";
         email.style.border = "2px solid #F74747";
         email.style.outlineColor = "#F74747";
+
+        checkEmail = false;
+        activateSignUpButton()
     } else if (e.target.value.includes("@") === false) {
         emailEmpty.style.display = "none";
         emailWrong.style.display = "block";
         email.style.border = "2px solid #F74747";
         email.style.outlineColor = "#F74747";
+
+        checkEmail = false;
+        activateSignUpButton()
     } else {
         emailEmpty.style.display = "none";
         emailWrong.style.display = "none";
@@ -63,11 +71,17 @@ nickname.addEventListener('focusout', e => {
         nickEmpty.style.display = "block";
         nickname.style.border = "2px solid #F74747";
         nickname.style.outlineColor = "#F74747";
+
+        checkNick = false;
+        activateSignUpButton()
     } else if (e.target.value.length < 4) {
         nickEmpty.style.display = "none";
         nickFour.style.display = "block";
         nickname.style.border = "2px solid #F74747";
         nickname.style.outlineColor = "#F74747";
+
+        checkNick = false;
+        activateSignUpButton()
     } else {
         nickEmpty.style.display = "none";
         nickFour.style.display = "none";
@@ -86,11 +100,17 @@ password.addEventListener('focusout', e => {
         pwEmpty.style.display = "block";
         password.style.border = "2px solid #F74747";
         password.style.outlineColor = "#F74747";
+
+        checkPw = false;
+        activateSignUpButton()
     } else if (e.target.value.length < 8) {
         pwEmpty.style.display = "none";
         pwWrong.style.display = "block";
         password.style.border = "2px solid #F74747";
         password.style.outlineColor = "#F74747";
+
+        checkPw = false;
+        activateSignUpButton()
     } else {
         pwEmpty.style.display = "none";
         pwWrong.style.display = "none";
@@ -111,20 +131,40 @@ toggleBtn.addEventListener('click', e => {
 })
 // 패스워드확인 비어있는지 확인 후 패스워드와 일치하는지 확인
 passwordC.addEventListener('focusout', e => {
-
-    if (e.target.value === "") {
-        pwCWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
+    if (passwordC.value === "") {
+        pwCWrong.style.display = "none"; //메시지가 중첩될 수 있기에 none
+        pwCEight.style.display = "none";
         pwCEmpty.style.display = "block";
         passwordC.style.border = "2px solid #F74747";
         passwordC.style.outlineColor = "#F74747";
-    } else if (e.target.value !== password.value) {
+
+        checkPwC = false;
+        activateSignUpButton();
+
+    } else if (passwordC.value.length < 8) {
+        pwCEight.style.display = "block";
         pwCEmpty.style.display = "none";
-        pwCWrong.style.display = "block";
+        pwCWrong.style.display = "none";
         passwordC.style.border = "2px solid #F74747";
         passwordC.style.outlineColor = "#F74747";
+        console.log("비밀번호2")
+        checkPwC = false;
+        activateSignUpButton();
+
+    } else if (passwordC.value !== password.value) {
+        pwCWrong.style.display = "block";
+        pwCEmpty.style.display = "none";
+        pwCEight.style.display = "none";
+        passwordC.style.border = "2px solid #F74747";
+        passwordC.style.outlineColor = "#F74747";
+        console.log("비밀번호3")
+        checkPwC = false;
+        activateSignUpButton();
+
     } else {
         pwCWrong.style.display = "none";
         pwCEmpty.style.display = "none";
+        pwCEight.style.display = "none";
         passwordC.style.border = "";
         passwordC.style.outlineColor = "";
 
@@ -140,28 +180,32 @@ toggleCBtn.addEventListener('click', e => {
         passwordC.type = "password";
     }
 })
+
 // 이메일과 패스워드가 모두 정상적으로 입력되었다면 로그인 버튼 활성화
 function activateSignUpButton() {
-    if ( (checkEmail === true) && (checkPw === true) && (checkNick === true) && (checkPwC === true) ) {
+    if ((checkEmail && checkPw) && (checkPwC && checkNick)) { //변수로 만들어서 처리
         signupBtn.disabled = false;
-        return true;
     } else {
-        return false;
+        signupBtn.disabled = true;
     }
 }
-// USER_DATA에 중복된 이메일이 있는 경우 ALERT.
-// 회원가입 성공적으로 끝났다면 login 페이지로 이동
-signupBtn.addEventListener('click', e => {
 
+// USER_DATA에 중복된 이메일이 있는 경우 ALERT. & 정상 회원가입됐다면 login.html로 이동.
+let validate = true;
+
+signupBtn.addEventListener('click', e => {
     for (let i = 0; i < USER_DATA.length; i++) {
-        let validate = false;
-        if (!(email.value === USER_DATA[i].email)) {
-            validate = true;
-            window.location.href = "../login.html";
+        const userData = USER_DATA[i];
+        const compared = (email.value === userData.email);
+
+        if (compared) {
+            validate = false;
         }
     }
 
-    if (validate === false) {
-        alert("이메일이 이미 등록된거시와요.");
+    if (validate) {
+        window.location.href = "../login.html";
+    } else {
+        alert("THATS NONO"); //////////////////// 모달창 업데이트
     }
 })

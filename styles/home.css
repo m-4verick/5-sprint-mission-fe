@@ -61,3 +61,19 @@
   letter-spacing: 0.08em;
   margin-top: 24px;
 }
+
+
+
+
+
+@media (max-width: 1199px){
+  body{
+    background-color: yellow;
+  }
+}
+
+@media (max-width: 743px){
+  body{
+    background-color: green;
+  }
+}

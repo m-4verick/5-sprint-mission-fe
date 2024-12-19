@@ -23,14 +23,14 @@ let checkPw = false;
 // 로그인 버튼 비활성화
 loginBtn.disabled = true;
 // 이메일 비어있는지 확인 후 @ 포함됐는지 검증
-email.addEventListener('input', e => {
+email.addEventListener('focusout', e => {
 
-    if(e.target.value === ""){
+    if(email.value === ""){
         emailWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
         emailEmpty.style.display = "block";
         email.style.border = "2px solid #F74747";
         email.style.outlineColor = "#F74747";
-    } else if(e.target.value.includes("@") === false){
+    } else if(email.value.includes("@") === false){
         emailEmpty.style.display = "none";
         emailWrong.style.display = "block";
         email.style.border = "2px solid #F74747";
@@ -46,15 +46,14 @@ email.addEventListener('input', e => {
     }
 })
 // 패스워드 비어있는지 확인 후 8자 이상인지 검증
-password.addEventListener('input', e => {
-
-    if(e.target.value === ""){
+password.addEventListener('focusout', e => {
+    if (password.value === ""){
         console.log("검증함");
         pwWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
         pwEmpty.style.display = "block";
         password.style.border = "2px solid #F74747";
         password.style.outlineColor = "#F74747";
-    } else if(e.target.value.length < 8){
+    } else if (password.value.length < 8){
         pwEmpty.style.display = "none";
         pwWrong.style.display = "block";
         password.style.border = "2px solid #F74747";
@@ -88,9 +87,8 @@ function activateLoginBtn() {
 }
 // 로그인 버튼을 눌렀을 때, 입력된 데이터가 USER_DATA의 정보와 일치하는 경우 items 페이지로 이동, 그렇지 않은 경우 ALERT
 loginBtn.addEventListener('click', e => {
-
+    let validate = false;
     for(let i = 0; i < USER_DATA.length; i++){
-        let validate = false;
         if( (email.value === USER_DATA[i].email) && (password.value === USER_DATA[i].password) ){
             validate = true;
             window.location.href = "../items.html";
@@ -98,6 +96,6 @@ loginBtn.addEventListener('click', e => {
     }
 
     if(validate === false){
-        alert("APTAPT");
+        alert("APTAPT"); // 일치되는 정보 없으면 모달창 ///////////공사 예정 ///////
     }
 })
