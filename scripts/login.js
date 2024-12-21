@@ -1,115 +1,76 @@
 const USER_DATA = [
-    { email: 'codeit1@codeit.com', password: "codeit101!" },
-    { email: 'codeit2@codeit.com', password: "codeit202!" },
-    { email: 'codeit3@codeit.com', password: "codeit303!" },
-    { email: 'codeit4@codeit.com', password: "codeit404!" },
-    { email: 'codeit5@codeit.com', password: "codeit505!" },
-    { email: 'codeit6@codeit.com', password: "codeit606!" },
+  {email: 'codeit1@codeit.com', password: "codeit101!"},
+  {email: 'codeit2@codeit.com', password: "codeit202!"},
+  {email: 'codeit3@codeit.com', password: "codeit303!"},
+  {email: 'codeit4@codeit.com', password: "codeit404!"},
+  {email: 'codeit5@codeit.com', password: "codeit505!"},
+  {email: 'codeit6@codeit.com', password: "codeit606!"},
 ]
+const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
 
-const email = document.querySelector('#email');
-const password = document.querySelector('#password');
-const emailWrong = document.querySelector('.emailWrong');
-const emailEmpty = document.querySelector('.emailEmpty');
-const pwWrong = document.querySelector('.pwWrong');
-const pwEmpty = document.querySelector('.pwEmpty');
-const loginBtn = document.querySelector('.button');
-const toggleBtn = document.querySelector('.password-toggle-button');
-const modalButton = document.querySelector('.modal-button');
-const popUp = document.querySelector('.popUp-wrapper');
+const emailInput = document.querySelector('#email');
+const passwordInput = document.querySelector('#password');
+const emailMessage = document.querySelector('.emailMessage');
+const passwordMessage = document.querySelector('.passwordMessage');
 
-// 이메일, 패스워드 정상 입력 받았는지 확인용 변수
-let checkEmail = false;
-let checkPw = false;
+const loginButton = document.querySelector('.login-button');
+let verifyIDPW = [false, false];
 
-// 로그인 버튼 비활성화
-loginBtn.disabled = true;
-// 이메일 비어있는지 확인 후 @ 포함됐는지 검증
-email.addEventListener('focusout', e => {
+// 이메일 검증
+emailInput.addEventListener('focusout', (e) => {
+  const targetLocation = e.target;
+  const targetValue = e.target.value;
 
-    if(email.value === ""){
-        emailWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
-        emailEmpty.style.display = "block";
-        email.style.border = "2px solid #F74747";
-        email.style.outlineColor = "#F74747";
-    } else if(email.value.includes("@") === false){
-        emailEmpty.style.display = "none";
-        emailWrong.style.display = "block";
-        email.style.border = "2px solid #F74747";
-        email.style.outlineColor = "#F74747";
-    } else {
-        emailEmpty.style.display = "none";
-        emailWrong.style.display = "none";
-        email.style.border = "";
-        email.style.outlineColor = "";
-
-        checkEmail = true;
-        activateLoginBtn()
-    }
+  if (!targetValue) showMessage(targetLocation, emailMessage, "이메일을 입력해주세요.");
+  else if (!emailValidCheck(targetValue)) showMessage(targetLocation, emailMessage, "잘못된 이메일 형식입니다.");
+  else {
+    clearMessage(targetLocation, emailMessage);
+    verifyIDPW[0] = true;
+    verifyLoginButtonEnable()
+  }
 })
-// 패스워드 비어있는지 확인 후 8자 이상인지 검증
-password.addEventListener('focusout', e => {
-    if (password.value === ""){
-        console.log("검증함");
-        pwWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
-        pwEmpty.style.display = "block";
-        password.style.border = "2px solid #F74747";
-        password.style.outlineColor = "#F74747";
-    } else if (password.value.length < 8){
-        pwEmpty.style.display = "none";
-        pwWrong.style.display = "block";
-        password.style.border = "2px solid #F74747";
-        password.style.outlineColor = "#F74747";
-    } else{
-        pwEmpty.style.display = "none";
-        pwWrong.style.display = "none";
-        password.style.border = "";
-        password.style.outlineColor = "";
+// 비밀번호 검증
+passwordInput.addEventListener('focusout', (e) => {
+  const targetLocation = e.target;
+  const targetValue = e.target.value;
 
-        checkPw = true;
-        activateLoginBtn()
-    }
+  if (!targetValue) showMessage(targetLocation, passwordMessage, "비밀번호를 입력해주세요.");
+  else if (!isOverEight(targetValue)) showMessage(targetLocation, passwordMessage, "비밀번호를 8자 이상 입력해주세요.");
+  else {
+    clearMessage(targetLocation, passwordMessage);
+    verifyIDPW[1] = true;
+    verifyLoginButtonEnable()
+  }
 })
-// 비밀번호 눈 아이콘 구현
-toggleBtn.addEventListener('click', e => {
-    if(password.type === "password"){
-        password.type = "text";
-    } else {
-        password.type = "password";
-    }
-})
-// 이메일과 패스워드가 모두 정상적으로 입력되었다면 로그인 버튼 활성화
-function activateLoginBtn() {
-    if( (checkEmail === true) && (checkPw === true) ){
-        loginBtn.disabled = false;
-        return true;
-    } else {
-        return false;
-    }
+
+// 이메일 유효성 검증
+function emailValidCheck(email) {
+  if (pattern.test(email) === false) {
+    return false;
+  } else {
+    return true;
+  }
 }
-// 로그인 버튼을 눌렀을 때, 입력된 데이터가 USER_DATA의 정보와 일치하는 경우 items 페이지로 이동, 그렇지 않은 경우 ALERT
-loginBtn.addEventListener('click', e => {
-
-    let validate = 0;
-
-    for(let i = 0; i < USER_DATA.length; i++){
-        if( (email.value === USER_DATA[i].email) && (password.value === USER_DATA[i].password) ){
-            validate += 1;
-            window.location.href = "../items.html";
-        }
-    }
-
-        if( (email.value === window.localStorage.getItem(email.value)) && (password.value === window.localStorage.getItem(password.value)) ) {
-            validate += 1;
-            window.location.href = "../items.html";
-        }
-
-    if(validate === 0){
-        console.log("validate failed");
-        popUp.style.display = "block";
-    }
-})
-
-modalButton.addEventListener('click', e => {
-    popUp.style.display = "none";
-})
+// 비밀번호 8자 이상 검증
+function isOverEight(password) {
+  if (password.length >= 8) return true;
+  else return false;
+}
+// 입력 데이터 문제 발생 시 가이드 메시지 출력
+function showMessage(targetLocation, message, value) {
+  message.innerHTML = value;
+  message.style.display = 'block';
+  targetLocation.style.border = '2px solid #F74747';
+  targetLocation.style.outlineColor = '#F74747';
+}
+// 입력 데이터에 문제가 없을 시 가이드 메시지 숨기기
+function clearMessage(targetLocation, message) {
+  message.style.display = 'none';
+  targetLocation.style.border = '';
+  targetLocation.style.outlineColor = '';
+}
+// 입력 데이터의 문제가 없을 시 로그인 버튼 활성화
+function verifyLoginButtonEnable() {
+  if (verifyIDPW[0] && verifyIDPW[1]) loginButton.disabled = false;
+  else loginButton.disabled = true;
+}
