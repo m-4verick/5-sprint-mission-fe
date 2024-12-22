@@ -14,7 +14,7 @@ const emailMessage = document.querySelector('.emailMessage');
 const passwordMessage = document.querySelector('.passwordMessage');
 
 const loginButton = document.querySelector('.login-button');
-let verifyIDPW = [false, false];
+
 
 // 이메일 검증
 emailInput.addEventListener('focusout', (e) => {
@@ -25,8 +25,6 @@ emailInput.addEventListener('focusout', (e) => {
   else if (!emailValidCheck(targetValue)) showMessage(targetLocation, emailMessage, "잘못된 이메일 형식입니다.");
   else {
     clearMessage(targetLocation, emailMessage);
-    verifyIDPW[0] = true;
-    verifyLoginButtonEnable()
   }
 })
 // 비밀번호 검증
@@ -38,12 +36,10 @@ passwordInput.addEventListener('focusout', (e) => {
   else if (!isOverEight(targetValue)) showMessage(targetLocation, passwordMessage, "비밀번호를 8자 이상 입력해주세요.");
   else {
     clearMessage(targetLocation, passwordMessage);
-    verifyIDPW[1] = true;
-    verifyLoginButtonEnable()
   }
 })
 
-// 이메일 유효성 검증
+// 이메일 유효성 검증 함수
 function emailValidCheck(email) {
   if (pattern.test(email) === false) {
     return false;
@@ -51,26 +47,22 @@ function emailValidCheck(email) {
     return true;
   }
 }
-// 비밀번호 8자 이상 검증
+// 비밀번호 8자 이상 검증 함수
 function isOverEight(password) {
   if (password.length >= 8) return true;
   else return false;
 }
-// 입력 데이터 문제 발생 시 가이드 메시지 출력
+// 입력 데이터 문제 발생 시 가이드 메시지 출력 함수
 function showMessage(targetLocation, message, value) {
   message.innerHTML = value;
   message.style.display = 'block';
   targetLocation.style.border = '2px solid #F74747';
   targetLocation.style.outlineColor = '#F74747';
 }
-// 입력 데이터에 문제가 없을 시 가이드 메시지 숨기기
+// 입력 데이터에 문제가 없을 시 가이드 메시지 숨기기 함수
 function clearMessage(targetLocation, message) {
   message.style.display = 'none';
   targetLocation.style.border = '';
   targetLocation.style.outlineColor = '';
 }
-// 입력 데이터의 문제가 없을 시 로그인 버튼 활성화
-function verifyLoginButtonEnable() {
-  if (verifyIDPW[0] && verifyIDPW[1]) loginButton.disabled = false;
-  else loginButton.disabled = true;
-}
+// 입력 데이터의 문제가 없을 시 로그인 버튼 활성화 함수
