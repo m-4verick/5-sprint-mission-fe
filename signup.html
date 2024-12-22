@@ -32,6 +32,7 @@
             type="email"
             placeholder="이메일을 입력해 주세요"
           />
+          <p class="guideMessage emailErrorMessage"></p>
         </div>
         <div class="input-item">
           <label for="nickname">닉네임</label>
@@ -41,6 +42,7 @@
             type="text"
             placeholder="닉네임을 입력해 주세요"
           />
+          <p class="guideMessage nicknameErrorMessage"></p>
         </div>
         <div class="input-item">
           <label for="password">비밀번호</label>
@@ -63,6 +65,7 @@
               />
             </button>
           </div>
+          <p class="guideMessage passwordErrorMessage"></p>
         </div>
         <div class="input-item">
           <label for="passwordConfirmation">비밀번호 확인</label>
@@ -84,9 +87,10 @@
               />
             </button>
           </div>
+          <p class="guideMessage confirmPasswordErrorMessage"></p>
         </div>
 
-        <button type="submit" class="button pill-button full-width">
+        <button type="button" class="signup-button button pill-button full-width" disabled>
           회원가입
         </button>
       </form>

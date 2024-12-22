@@ -12,33 +12,75 @@ const emailInput = document.querySelector('#email');
 const passwordInput = document.querySelector('#password');
 const emailMessage = document.querySelector('.emailMessage');
 const passwordMessage = document.querySelector('.passwordMessage');
-
 const loginButton = document.querySelector('.login-button');
 
+const errorMessage = {
+  "email": {
+    "inputTarget": emailInput,
+    "messageTarget": emailMessage,
+  },
+  "emailEmpty": {
+    "inputTarget": emailInput,
+    "messageTarget": emailMessage,
+    "textContent": "이메일을 입력해주세요.",
+  },
+  "emailWrong": {
+    "inputTarget": emailInput,
+    "messageTarget": emailMessage,
+    "textContent": "올바른 이메일 형식이 아닙니다.",
+  },
+  "password": {
+    "inputTarget": passwordInput,
+    "messageTarget": passwordMessage,
+  },
+  "passwordEmpty": {
+    "inputTarget": passwordInput,
+    "messageTarget": passwordMessage,
+    "textContent": "비밀번호를 입력해주세요.",
+  },
+  "passwordWrong": {
+    "inputTarget": passwordInput,
+    "messageTarget": passwordMessage,
+    "textContent": "비밀번호를 8자 이상 입력해주세요.",
+  },
+}
+let emailInputValid = false;
+let passwordInputValid = false;
 
+let inputEmailValue = "";
+let inputPasswordValue = "";
+
+/////////////////////////////////////// addEventListener /////////////////////////////////////////////////////
 // 이메일 검증
-emailInput.addEventListener('focusout', (e) => {
-  const targetLocation = e.target;
-  const targetValue = e.target.value;
+emailInput.addEventListener('focusout', e => {
+  inputEmailValue = e.target.value;
 
-  if (!targetValue) showMessage(targetLocation, emailMessage, "이메일을 입력해주세요.");
-  else if (!emailValidCheck(targetValue)) showMessage(targetLocation, emailMessage, "잘못된 이메일 형식입니다.");
+  if (!inputEmailValue) showMessage(errorMessage.emailEmpty);
+  else if ( !emailValidCheck(inputEmailValue) ) showMessage(errorMessage.emailWrong);
   else {
-    clearMessage(targetLocation, emailMessage);
+    clearMessage(errorMessage.email);
+    emailInputValid = true;
+    enableButtonWhenAllCorrect();
   }
 })
 // 비밀번호 검증
-passwordInput.addEventListener('focusout', (e) => {
-  const targetLocation = e.target;
-  const targetValue = e.target.value;
-
-  if (!targetValue) showMessage(targetLocation, passwordMessage, "비밀번호를 입력해주세요.");
-  else if (!isOverEight(targetValue)) showMessage(targetLocation, passwordMessage, "비밀번호를 8자 이상 입력해주세요.");
+passwordInput.addEventListener('focusout', e => {
+  inputPasswordValue = e.target.value;
+  if (!inputPasswordValue) showMessage(errorMessage.passwordEmpty);
+  else if (!passwordOverEight(inputPasswordValue)) showMessage(errorMessage.passwordWrong);
   else {
-    clearMessage(targetLocation, passwordMessage);
+    clearMessage(errorMessage.password);
+    passwordInputValid = true;
+    enableButtonWhenAllCorrect();
   }
 })
+// 로그인 버튼 누르면 USER_DATA의 정보와 일치여부 확인
+loginButton.addEventListener('click', e => {
+  if (loginInfoCorrect()) window.location.href = "../items.html";
+  else alert("틀렸다.");
+})
 
+///////////////////////////////// Functions ////////////////////////////////////////////////////////////////
 // 이메일 유효성 검증 함수
 function emailValidCheck(email) {
   if (pattern.test(email) === false) {
@@ -48,21 +90,37 @@ function emailValidCheck(email) {
   }
 }
 // 비밀번호 8자 이상 검증 함수
-function isOverEight(password) {
-  if (password.length >= 8) return true;
-  else return false;
+function passwordOverEight(password) {
+  return password.length > 8;
 }
-// 입력 데이터 문제 발생 시 가이드 메시지 출력 함수
-function showMessage(targetLocation, message, value) {
-  message.innerHTML = value;
-  message.style.display = 'block';
-  targetLocation.style.border = '2px solid #F74747';
-  targetLocation.style.outlineColor = '#F74747';
+// input 데이터 문제 확인되면 메시지를 보여주는 함수
+function showMessage(target) {
+  target.inputTarget.style.border = "2px solid #F74747";
+  target.inputTarget.style.outlineColor = "#F74747";
+  target.messageTarget.style.display = "block";
+
+  target.messageTarget.innerHTML = target.textContent;
+  loginButton.disabled = true;
+
 }
-// 입력 데이터에 문제가 없을 시 가이드 메시지 숨기기 함수
-function clearMessage(targetLocation, message) {
-  message.style.display = 'none';
-  targetLocation.style.border = '';
-  targetLocation.style.outlineColor = '';
+// input 데이터에 문제 없다면 모든 메시지 설정값을 초기화 하는 함수
+function clearMessage(target) {
+  target.inputTarget.style.border = "";
+  target.inputTarget.style.outlineColor = "";
+  target.messageTarget.innerHTML = "";
+  target.messageTarget.style.display = "none";
 }
-// 입력 데이터의 문제가 없을 시 로그인 버튼 활성화 함수
+// 로그인 버튼 활성화 판단 함수
+function enableButtonWhenAllCorrect() {
+  if (emailInputValid && passwordInputValid) loginButton.disabled = false;
+  else loginButton.disabled = true;
+}
+// USER_DATA와 input 값을 비교하여 true / false를 리턴하는 함수
+function loginInfoCorrect() {
+  return USER_DATA.some(existUser => {
+    const emailMatch = (existUser.email === inputEmailValue);
+    const passwordMatch = (existUser.password === inputPasswordValue);
+
+    return (emailMatch && passwordMatch);
+  })
+}
