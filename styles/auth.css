@@ -94,15 +94,10 @@
 }
 
 
-.emailEmpty,
-.emailWrong,
-.pwWrong,
-.pwEmpty,
-.nickEmpty,
-.nickFour,
-.pwCEmpty,
-.pwCWrong,
-.pwCEight {
+#emailError,
+#passwordError,
+#nicknameError,
+#pwConfirmError{
   margin-left: 16px;
   margin-top: 8px;
 
@@ -112,7 +107,7 @@
   color: #F74747;
 }
 
-.popUp-wrapper {
+.popup-wrapper {
   display: none;
   top: 0;
   width: 100%;

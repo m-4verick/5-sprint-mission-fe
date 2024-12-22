@@ -32,8 +32,7 @@
             type="email"
             placeholder="이메일을 입력해 주세요"
           />
-          <p class="emailEmpty">이메일을 입력해주세요.</p>
-          <p class="emailWrong">잘못된 이메일 형식입니다.</p>
+          <p id="emailError">이메일을 입력해주세요.</p>
 
         </div>
         <div class="input-item">
@@ -44,8 +43,7 @@
             type="text"
             placeholder="닉네임을 입력해 주세요"
           />
-          <p class="nickEmpty">닉네임을 입력해주세요.</p>
-          <p class="nickFour">닉네임은 4글자 이상으로 정해주세요.</p>
+          <p id="nicknameError">닉네임을 입력해주세요.</p>
 
         </div>
         <div class="input-item">
@@ -69,8 +67,7 @@
               />
             </button>
           </div>
-          <p class="pwEmpty">비밀번호를 입력해주세요.</p>
-          <p class="pwWrong">비밀번호를 8자 이상 입력해주세요.</p>
+          <p id="passwordError">비밀번호를 입력해주세요.</p>
         </div>
         <div class="input-item">
           <label for="passwordConfirmation">비밀번호 확인</label>
@@ -92,12 +89,10 @@
               />
             </button>
           </div>
-          <p class="pwCEmpty">비밀번호 확인란을 입력해주세요.</p>
-          <p class="pwCEight">비밀번호를 8자 이상 입력해주세요.</p>
-          <p class="pwCWrong">비밀번호가 일치하지 않습니다.</p>
+          <p id="pwConfirmError">비밀번호 확인란을 입력해주세요.</p>
         </div>
 
-        <button type="button" class="button pill-button full-width">
+        <button type="button" class="signup-button button pill-button full-width" disabled>
           회원가입
         </button>
       </form>
@@ -133,7 +128,7 @@
       </div>
     </main>
 
-    <div class="popUp-wrapper">
+    <div class="popup-wrapper">
       <div class="popUp">
         <p>사용 중인 이메일입니다.</p>
         <button class="modal-button">확인</button>

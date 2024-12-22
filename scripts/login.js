@@ -7,109 +7,97 @@ const USER_DATA = [
     { email: 'codeit6@codeit.com', password: "codeit606!" },
 ]
 
-const email = document.querySelector('#email');
-const password = document.querySelector('#password');
-const emailWrong = document.querySelector('.emailWrong');
-const emailEmpty = document.querySelector('.emailEmpty');
-const pwWrong = document.querySelector('.pwWrong');
-const pwEmpty = document.querySelector('.pwEmpty');
-const loginBtn = document.querySelector('.button');
+const loginBtn = document.querySelector('.login-button');
 const toggleBtn = document.querySelector('.password-toggle-button');
-const modalButton = document.querySelector('.modal-button');
-const popUp = document.querySelector('.popUp-wrapper');
+const popUp = document.querySelector('.popup-wrapper');
+const popupCloseBtn = document.querySelector('.modal-button');
+const email = {
+    input: document.querySelector('#email'),
+    error: document.querySelector('#emailError'),
+    empty: "이메일을 입력해주세요.",
+    wrong: "유효한 이메일 형식이 아닙니다.",
+}
+const password = {
+    input: document.querySelector('#password'),
+    error: document.querySelector('#passwordError'),
+    empty: "비밀번호를 입력해주세요",
+    wrong: "비밀번호를 8자 이상 입력해주세요",
+}
 
 // 이메일, 패스워드 정상 입력 받았는지 확인용 변수
-let checkEmail = false;
-let checkPw = false;
+let emailValidation = false;
+let passwordValidation = false;
 
-// 로그인 버튼 비활성화
-loginBtn.disabled = true;
-// 이메일 비어있는지 확인 후 @ 포함됐는지 검증
-email.addEventListener('focusout', e => {
+// 이메일 검증
+email.input.addEventListener('focusout', e => {
+    const inputValue = e.target.value;
 
-    if(email.value === ""){
-        emailWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
-        emailEmpty.style.display = "block";
-        email.style.border = "2px solid #F74747";
-        email.style.outlineColor = "#F74747";
-    } else if(email.value.includes("@") === false){
-        emailEmpty.style.display = "none";
-        emailWrong.style.display = "block";
-        email.style.border = "2px solid #F74747";
-        email.style.outlineColor = "#F74747";
-    } else {
-        emailEmpty.style.display = "none";
-        emailWrong.style.display = "none";
-        email.style.border = "";
-        email.style.outlineColor = "";
-
-        checkEmail = true;
-        activateLoginBtn()
+    if(!inputValue) showMessage(email, email.empty);
+    else if(!emailValidCheck(inputValue)) showMessage(email, email.wrong);
+    else {
+        clearMessage(email);
+        emailValidation = true;
+        canEnableButton()
     }
 })
-// 패스워드 비어있는지 확인 후 8자 이상인지 검증
-password.addEventListener('focusout', e => {
-    if (password.value === ""){
-        console.log("검증함");
-        pwWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
-        pwEmpty.style.display = "block";
-        password.style.border = "2px solid #F74747";
-        password.style.outlineColor = "#F74747";
-    } else if (password.value.length < 8){
-        pwEmpty.style.display = "none";
-        pwWrong.style.display = "block";
-        password.style.border = "2px solid #F74747";
-        password.style.outlineColor = "#F74747";
-    } else{
-        pwEmpty.style.display = "none";
-        pwWrong.style.display = "none";
-        password.style.border = "";
-        password.style.outlineColor = "";
+// 비밀번호 검증
+password.input.addEventListener('focusout', e => {
+    const inputValue = e.target.value;
 
-        checkPw = true;
-        activateLoginBtn()
+    if (!inputValue) showMessage(password, password.empty);
+    else if (!isOverEight(inputValue)) showMessage(password, password.wrong);
+    else {
+        clearMessage(password);
+        passwordValidation = true;
+        canEnableButton()
     }
 })
 // 비밀번호 눈 아이콘 구현
 toggleBtn.addEventListener('click', e => {
-    if(password.type === "password"){
-        password.type = "text";
-    } else {
-        password.type = "password";
-    }
+    toggleEyeButton();
 })
-// 이메일과 패스워드가 모두 정상적으로 입력되었다면 로그인 버튼 활성화
-function activateLoginBtn() {
-    if( (checkEmail === true) && (checkPw === true) ){
-        loginBtn.disabled = false;
-        return true;
-    } else {
-        return false;
-    }
-}
-// 로그인 버튼을 눌렀을 때, 입력된 데이터가 USER_DATA의 정보와 일치하는 경우 items 페이지로 이동, 그렇지 않은 경우 ALERT
+// 로그인 버튼을 눌렀을 때, 입력된 데이터가 USER_DATA의 정보와 일치하는 경우 items 페이지로 이동, 그렇지 않은 경우 팝업
 loginBtn.addEventListener('click', e => {
+    USER_DATA.some((user) => {
+        const emailValid = (user.email === email.input.value);
+        const passwordValid = (user.password === password.input.value);
 
-    let validate = 0;
-
-    for(let i = 0; i < USER_DATA.length; i++){
-        if( (email.value === USER_DATA[i].email) && (password.value === USER_DATA[i].password) ){
-            validate += 1;
-            window.location.href = "../items.html";
-        }
-    }
-
-        if( (email.value === window.localStorage.getItem(email.value)) && (password.value === window.localStorage.getItem(password.value)) ) {
-            validate += 1;
-            window.location.href = "../items.html";
-        }
-
-    if(validate === 0){
-        console.log("validate failed");
-        popUp.style.display = "block";
-    }
+        if(emailValid && passwordValid) window.location.href = "../items.html";
+        else popUp.style.display = "block";
+    })
 })
-
-modalButton.addEventListener('click', e => {
+// 팝업 확인 버튼
+popupCloseBtn.addEventListener('click', e => {
     popUp.style.display = "none";
 })
+
+
+//////////////// functions /////////////////////
+function showMessage(target, message) {
+    target.error.style.display = "block";
+    target.error.innerHTML = message;
+    target.input.style.border = "2px solid #F74747";
+    target.input.style.outlineColor = "#F74747";
+}
+function clearMessage(target) {
+    target.error.style.display = "none";
+    target.error.innerHTML = "";
+    target.input.style.border = "";
+    target.input.style.outlineColor = "";
+}
+function emailValidCheck(value) {
+    const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
+
+    if(pattern.test(value) === false) { return false; }
+    else { return true; }
+}
+function isOverEight(value) {
+    return (value.length >= 8);
+}
+function toggleEyeButton() {
+    if (password.input.type === "password") password.input.type = "text";
+    else password.input.type = "password";
+}
+function canEnableButton() {
+    loginBtn.disabled = !(emailValidation && passwordValidation);
+}
