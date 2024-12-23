@@ -107,7 +107,7 @@
   color: #F74747;
 }
 
-.popup-wrapper {
+.errorModal {
   display: none;
   top: 0;
   width: 100%;
@@ -115,6 +115,10 @@
   position: absolute;
   z-index: 9;
   background-color: rgba(0,0,0, 0.7);
+}
+
+.showErrorModal {
+  display: block;
 }
 
 .popUp {

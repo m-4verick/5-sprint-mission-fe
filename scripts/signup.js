@@ -40,7 +40,7 @@ const toggleButtonPassword = document.querySelector('.password-toggle-button');
 const toggleButtonPasswordConfirm = document.querySelector('.toggleC');
 
 const modalButton = document.querySelector('.modal-button');
-const popUp = document.querySelector('.popUp-wrapper');
+const popUp = document.querySelector('.errorModal');
 
 let emailInputValue = "";
 let passwordInputValue = "";
@@ -117,15 +117,15 @@ toggleButtonPasswordConfirm.addEventListener('click', e => {
 // USER_DATA 비교하여 login.html 이동 OR 모달 메시지 출력
 signupBtn.addEventListener('click', e => {
   const isEmailExist = USER_DATA.some(function (user) {
-    (emailInputValue === user.email);
-})
+    return (emailInputValue === user.email);
+  })
 
-if (!isEmailExist) goLoginPage();
-else showExistEmailModal();
+  if (!isEmailExist) goLoginPage();
+  else showErrorModal();
 })
 
 modalButton.addEventListener('click', e => {
-  popUp.style.display = "none";
+  popUp.style.display = 'none';
 })
 
 ///////////////////// functions ///////////////////////
@@ -179,9 +179,10 @@ function passwordMatch(password, passwordConfirm) {
 }
 
 function goLoginPage() {
-  window.location.href = "../login.html";
+  // window.location.href = "../login.html";
+  console.log("GO LOGIN PAGE");
 }
 
-function showExistEmailModal() {
-  popUp.classList.add('.display');
+function showErrorModal() {
+  popUp.style.display = "block";
 }
