@@ -143,6 +143,12 @@
   color: #FFFFFF;
 }
 
+.errorInputBorder {
+  border: 2px solid #F74747;
+  outline-color: #F74747;
+
+}
+
 @media (max-width: 1199px) {
 
 }

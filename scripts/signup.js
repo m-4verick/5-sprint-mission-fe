@@ -6,225 +6,123 @@ const USER_DATA = [
   {email: 'codeit5@codeit.com', password: "codeit505!"},
   {email: 'codeit6@codeit.com', password: "codeit606!"},
 ]
-const email = {
-    input: document.querySelector('#email'),
-    error: document.querySelector('#emailError'),
-    empty: "이메일을 입력해주세요.",
-    wrong: "유효한 이메일 형식이 아닙니다.",
+let email = {
+  input: document.querySelector('#email'),
+  error: document.querySelector('#emailError'),
+  empty: "이메일을 입력해주세요.",
+  wrong: "유효한 이메일 형식이 아닙니다.",
+  valid: false,
 }
-const password = {
-    input: document.querySelector('#password'),
-    error: document.querySelector('#passwordError'),
-    empty: "비밀번호를 입력해주세요",
-    wrong: "비밀번호를 8자 이상 입력해주세요",
+let password = {
+  input: document.querySelector('#password'),
+  error: document.querySelector('#passwordError'),
+  empty: "비밀번호를 입력해주세요",
+  wrong: "비밀번호를 8자 이상 입력해주세요",
+  valid: false,
 }
-const nickname = {
-    input: document.querySelector('#nickname'),
-    error: document.querySelector('#nicknameError'),
-    empty: "닉네임을 입력해주세요.",
-    wrong: "닉네임을 4자 이상 입력해주세요.",
+let nickname = {
+  input: document.querySelector('#nickname'),
+  error: document.querySelector('#nicknameError'),
+  empty: "닉네임을 입력해주세요.",
+  wrong: "닉네임을 4자 이상 입력해주세요.",
+  valid: false,
 }
-const passwordConfirm = {
-    input: document.querySelector('#passwordConfirmation'),
-    error: document.querySelector('#pwConfirmError'),
-    empty: "비밀번호를 입력해주세요",
-    wrong: "비밀번호가 일치하지 않습니다.",
+let passwordConfirm = {
+  input: document.querySelector('#passwordConfirmation'),
+  error: document.querySelector('#pwConfirmError'),
+  empty: "비밀번호를 입력해주세요",
+  wrong: "비밀번호가 일치하지 않습니다.",
+  valid: false,
 }
 
 const signupBtn = document.querySelector('.signup-button');
-const toggleBtn = document.querySelector('.password-toggle-button');
-const toggleCBtn = document.querySelector('.toggleC');
+const toggleButtonPassword = document.querySelector('.password-toggle-button');
+const toggleButtonPasswordConfirm = document.querySelector('.toggleC');
 
 const modalButton = document.querySelector('.modal-button');
 const popUp = document.querySelector('.popUp-wrapper');
 
-// 이메일, 패스워드 정상 입력 받았는지 확인용 변수
-let emailValidation = false;
-let nicknameValidation = false;
-let passwordValidation = false;
-let pwConfirmValidation = false;
-
+let emailInputValue = "";
+let passwordInputValue = "";
 
 email.input.addEventListener('focusout', e => {
-  // if (!e.target.value) { //이렇게 바꿔봅시다.
-  //   emailWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
-  //   emailEmpty.style.display = "block";
-  //   email.style.border = "2px solid #F74747";
-  //   email.style.outlineColor = "#F74747";
-  //
-  //   checkEmail = false;
-  //   activateSignUpButton()
-  // } else if (e.target.value.includes("@") === false) {
-  //   emailEmpty.style.display = "none";
-  //   emailWrong.style.display = "block";
-  //   email.style.border = "2px solid #F74747";
-  //   email.style.outlineColor = "#F74747";
-  //
-  //   checkEmail = false;
-  //   activateSignUpButton()
-  // } else {
-  //   emailEmpty.style.display = "none";
-  //   emailWrong.style.display = "none";
-  //   email.style.border = "";
-  //   email.style.outlineColor = "";
-  //
-  //   checkEmail = true;
-  //   activateSignUpButton()
-  // }
-    const inputValue = e.target.value;
+  emailInputValue = e.target.value;
 
-    if (!inputValue) showMessage(email, email.empty);
-    else if (emailValidCheck(inputValue)) showMessage(email, email.wrong);
-    else clearMessage(email);
+  if (!emailInputValue) {
+    showMessage(email, email.empty);
+    canEnableButton();
+  } else if (!emailValidCheck(emailInputValue)) {
+    showMessage(email, email.wrong);
+    canEnableButton();
+  } else {
+    clearMessage(email);
+    canEnableButton();
+  }
 })
 // 닉네임칸 비었는지, 4글자 이상인지 확인
-nickname.addEventListener('focusout', e => {
+nickname.input.addEventListener('focusout', e => {
+  const inputValue = e.target.value;
 
-  if (e.target.value === "") {
-    nickFour.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
-    nickEmpty.style.display = "block";
-    nickname.style.border = "2px solid #F74747";
-    nickname.style.outlineColor = "#F74747";
-
-    checkNick = false;
-    activateSignUpButton()
-  } else if (e.target.value.length < 4) {
-    nickEmpty.style.display = "none";
-    nickFour.style.display = "block";
-    nickname.style.border = "2px solid #F74747";
-    nickname.style.outlineColor = "#F74747";
-
-    checkNick = false;
-    activateSignUpButton()
+  if (!inputValue) {
+    showMessage(nickname, nickname.empty);
+    canEnableButton();
+  } else if (!isOverFour(inputValue)) {
+    showMessage(nickname, nickname.wrong);
+    canEnableButton();
   } else {
-    nickEmpty.style.display = "none";
-    nickFour.style.display = "none";
-    nickname.style.border = "";
-    nickname.style.outlineColor = "";
-
-    checkNick = true;
-    activateSignUpButton()
+    clearMessage(nickname);
+    canEnableButton();
   }
 })
 // 패스워드 비어있는지 확인 후 8자 이상인지 검증
-password.addEventListener('focusout', e => {
+password.input.addEventListener('focusout', e => {
+  passwordInputValue = e.target.value;
 
-  if (e.target.value === "") {
-    pwWrong.style.display = "none"; //메시지 2개가 중첩될 수 있기에 하나는 none
-    pwEmpty.style.display = "block";
-    password.style.border = "2px solid #F74747";
-    password.style.outlineColor = "#F74747";
-
-    checkPw = false;
-    activateSignUpButton()
-  } else if (e.target.value.length < 8) {
-    pwEmpty.style.display = "none";
-    pwWrong.style.display = "block";
-    password.style.border = "2px solid #F74747";
-    password.style.outlineColor = "#F74747";
-
-    checkPw = false;
-    activateSignUpButton()
+  if (!passwordInputValue) {
+    showMessage(password, password.empty);
+    canEnableButton();
+  } else if (!isOverEight(passwordInputValue)) {
+    showMessage(password, password.wrong);
+    canEnableButton();
   } else {
-    pwEmpty.style.display = "none";
-    pwWrong.style.display = "none";
-    password.style.border = "";
-    password.style.outlineColor = "";
-
-    checkPw = true;
-    activateSignUpButton()
-  }
-})
-// 비밀번호 눈 아이콘 구현
-toggleBtn.addEventListener('click', e => {
-  if (password.type === "password") {
-    password.type = "text";
-  } else {
-    password.type = "password";
+    clearMessage(password);
+    canEnableButton();
   }
 })
 // 패스워드확인 비어있는지 확인 후 패스워드와 일치하는지 확인
-passwordC.addEventListener('focusout', e => {
-  if (passwordC.value === "") {
-    pwCWrong.style.display = "none"; //메시지가 중첩될 수 있기에 none
-    pwCEight.style.display = "none";
-    pwCEmpty.style.display = "block";
-    passwordC.style.border = "2px solid #F74747";
-    passwordC.style.outlineColor = "#F74747";
+passwordConfirm.input.addEventListener('focusout', e => {
+  const inputValue = e.target.value;
 
-    checkPwC = false;
-    activateSignUpButton();
-
-  } else if (passwordC.value.length < 8) {
-    pwCEight.style.display = "block";
-    pwCEmpty.style.display = "none";
-    pwCWrong.style.display = "none";
-    passwordC.style.border = "2px solid #F74747";
-    passwordC.style.outlineColor = "#F74747";
-    console.log("비밀번호2")
-    checkPwC = false;
-    activateSignUpButton();
-
-  } else if (passwordC.value !== password.value) {
-    pwCWrong.style.display = "block";
-    pwCEmpty.style.display = "none";
-    pwCEight.style.display = "none";
-    passwordC.style.border = "2px solid #F74747";
-    passwordC.style.outlineColor = "#F74747";
-    console.log("비밀번호3")
-    checkPwC = false;
-    activateSignUpButton();
-
+  if (!inputValue) {
+    showMessage(passwordConfirm, passwordConfirm.empty);
+    canEnableButton();
+  } else if (!passwordMatch(inputValue, passwordInputValue)) {
+    showMessage(passwordConfirm, passwordConfirm.wrong);
+    canEnableButton();
   } else {
-    pwCWrong.style.display = "none";
-    pwCEmpty.style.display = "none";
-    pwCEight.style.display = "none";
-    passwordC.style.border = "";
-    passwordC.style.outlineColor = "";
-
-    checkPwC = true;
-    activateSignUpButton()
-  }
-})
-// 패스워드확인 눈 아이콘 구현
-toggleCBtn.addEventListener('click', e => {
-  if (passwordC.type === "password") {
-    passwordC.type = "text";
-  } else {
-    passwordC.type = "password";
+    clearMessage(passwordConfirm);
+    canEnableButton();
   }
 })
 
-// 이메일과 패스워드가 모두 정상적으로 입력되었다면 로그인 버튼 활성화
-function activateSignUpButton() {
-  signupBtn.disabled = !((checkEmail && checkPw) && (checkPwC && checkNick));
-}
+// 비밀번호 토글 아이콘 구현
+toggleButtonPassword.addEventListener('click', e => {
+  toggleEyeButton(password);
+})
+// 비밀번호 확인 토글 아이콘 구현
+toggleButtonPasswordConfirm.addEventListener('click', e => {
+  toggleEyeButton(passwordConfirm);
+})
 
-// USER_DATA에 중복된 이메일이 있는 경우 ALERT. & 정상 회원가입됐다면 login.html로 이동.
+// USER_DATA 비교하여 login.html 이동 OR 모달 메시지 출력
+signupBtn.addEventListener('click', e => {
+  const isEmailExist = USER_DATA.some(function (user) {
+    (emailInputValue === user.email);
+})
 
-signupBtn.addEventListener('click',
-  e => {
-    let validate = 0;
-
-    for (let i = 0; i < USER_DATA.length; i++) {
-      const userData = USER_DATA[i];
-
-      if (email.value === userData.email) {
-        validate += 1;
-      }
-    }
-
-    if (validate === 0) {
-      window.localStorage.setItem(email.value, email.value);
-      window.localStorage.setItem(password.value, password.value);
-      console.log(window.localStorage.getItem(email.value));
-      console.log(window.localStorage.getItem(password.value));
-      window.location.href = "../login.html";
-    } else {
-      popUp.style.display = "block";
-    }
-  })
-
+if (!isEmailExist) goLoginPage();
+else showExistEmailModal();
+})
 
 modalButton.addEventListener('click', e => {
   popUp.style.display = "none";
@@ -232,30 +130,58 @@ modalButton.addEventListener('click', e => {
 
 ///////////////////// functions ///////////////////////
 function showMessage(target, message) {
-    target.error.style.display = "block";
-    target.error.innerHTML = message;
-    target.input.style.border = "2px solid #F74747";
-    target.input.style.outlineColor = "#F74747";
-}
-function clearMessage(target) {
-    target.error.style.display = "none";
-    target.error.innerHTML = "";
-    target.input.style.border = "";
-    target.input.style.outlineColor = "";
-}
-function emailValidCheck(value) {
-    const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
+  target.error.style.display = "block";
+  target.error.innerHTML = message;
+  target.input.style.border = "2px solid #F74747";
+  target.input.style.outlineColor = "#F74747";
 
-    if(pattern.test(value) === false) { return false; }
-    else { return true; }
+  return target.valid = false;
 }
+
+function clearMessage(target) {
+  target.error.style.display = "none";
+  target.error.innerHTML = "";
+  target.input.style.border = "";
+  target.input.style.outlineColor = "";
+
+  return target.valid = true;
+}
+
+function emailValidCheck(value) {
+  const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
+
+  if (pattern.test(value) === false) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 function isOverEight(value) {
-    return (value.length >= 8);
+  return (value.length >= 8);
 }
-function toggleEyeButton() {
-    if (password.input.type === "password") password.input.type = "text";
-    else password.input.type = "password";
+
+function toggleEyeButton(target) {
+  if (target.input.type === "password") target.input.type = "text";
+  else target.input.type = "password";
 }
+
 function canEnableButton() {
-    loginBtn.disabled = !(emailValidation && passwordValidation);
+  signupBtn.disabled = !(email.valid && nickname.valid && password.valid && passwordConfirm.valid);
+}
+
+function isOverFour(value) {
+  return (value.length >= 4);
+}
+
+function passwordMatch(password, passwordConfirm) {
+  return (password === passwordConfirm);
+}
+
+function goLoginPage() {
+  window.location.href = "../login.html";
+}
+
+function showExistEmailModal() {
+  popUp.classList.add('.display');
 }
