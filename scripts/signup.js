@@ -179,8 +179,7 @@ function passwordMatch(password, passwordConfirm) {
 }
 
 function goLoginPage() {
-  // window.location.href = "../login.html";
-  console.log("GO LOGIN PAGE");
+  window.location.href = "../login.html";
 }
 
 function showErrorModal() {
