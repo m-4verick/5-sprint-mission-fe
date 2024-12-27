@@ -4,7 +4,6 @@ import product from './modules/ProductService.js';
 let articleValue, productValue;
 
 
-
 productValue = await product.getProductList(1,2);
 console.log(productValue);
 
