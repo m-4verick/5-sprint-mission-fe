@@ -3,6 +3,32 @@ import product from './modules/ProductService.js';
 
 let articleValue, productValue;
 
+////////////////////////////////////////////////////////////////////////////////////////
+
+articleValue = await article.getArticleList(1, 2);
+console.log(articleValue);
+
+articleValue = await article.getArticle(143);
+console.log(articleValue);
+
+const createArticleContainer = {
+    title: "title",
+    content: "content",
+    image: "image.png",
+}
+articleValue = await article.createArticle(createArticleContainer)
+console.log(articleValue);
+
+const patchArticleContainer = {
+    title: "수정된 이름",
+}
+articleValue = await article.patchArticle(1439, patchArticleContainer);
+console.log(articleValue);
+
+articleValue = await article.deleteArticle(1419);
+console.log(articleValue);
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 productValue = await product.getProductList(1,2);
 console.log(productValue);
@@ -28,3 +54,5 @@ console.log(productValue);
 
 productValue = await product.deleteProduct(688);
 console.log(productValue);
+
+////////////////////////////////////////////////////////////////////////////////////////
