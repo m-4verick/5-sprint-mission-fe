@@ -1,54 +1,57 @@
-import axios from "axios";
+import axios from 'axios';
+import global from '../global.js';
 
-async function getArticleList(page, pageSize, keyword="") {
-    try {
-        const url = `https://sprint-mission-api.vercel.app/articles?page=${page}&pageSize=${pageSize}&keyword=${encodeURIComponent(keyword)}`;
-        const res = await axios.get(url)
-        const data = res.data;
+/**
+ * article 리스트를 받아오는 함수
+ * @param { number } page 페이지 수
+ * @param { number } pageSize 페이지당 article 수
+ * @param { string } keyword 검색 키워드
+ *
+ */
+function getArticleList(page, pageSize, keyword = "") {
 
-        return data;
-    } catch (error) {
-        console.log(error);
-    }
 }
-async function createArticle(title, content, image) {
-    try {
-        const url = `https://sprint-mission-api.vercel.app/articles`
-        const res = await axios.post(url, {
-            title,
-            content,
-            image,
-        })
-        const data = res.data;
-        console.log(data);
 
-        return data;
-    } catch (error) {
-        console.log(error);
-    }
-}
-async function patchArticle(patchID, container) {
-    try {
-        const url = `https://sprint-mission-api.vercel.app/articles/${patchID}`;
-        const res = await axios.patch(url, container)
+/**
+ * 특정 id의 article을 받아오는 함수
+ * @param { number } id 조회할 id값
+ *
+ */
+function getArticle(id) {
 
-        return res.data;
-    } catch (error) {
-        console.log(error);
-    }
 }
-async function deleteArticle(deleteID) {
-    try {
-        const res = await axios.delete(`https://sprint-mission-api.vercel.app/articles/${deleteID}`);
-        const data = res.data;
 
-        return data;
-    } catch (error) {
-        console.log(error);
-    }
+/**
+ * article을 생성하는 함수
+ * @param { object } container name, content, image를 포함하는 객체
+ *
+ */
+function createArticle(container) {
+
 }
+
+/**
+ * 특정 id의 article을 수정하는 함수
+ * @param { number } id 수정할 article의 id값
+ * @param { object } obj 수정할 내용이 담긴 객체
+ *
+ */
+function patchArticle(id, obj) {
+
+}
+
+/**
+ * 특정 id의 article을 삭제하는 함수
+ * @param { number } id 삭제할 article의 id값
+ *
+ */
+function deleteArticle(id) {
+
+}
+
 export default {
     getArticleList,
+    getArticle,
     createArticle,
     patchArticle,
     deleteArticle,
