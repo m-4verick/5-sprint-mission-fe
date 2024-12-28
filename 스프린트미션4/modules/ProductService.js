@@ -70,7 +70,7 @@ async function getProduct(id) {
         if (global.checkOk(res)) return data;
         else throw new Error;
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
 
