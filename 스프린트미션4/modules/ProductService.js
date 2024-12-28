@@ -1,7 +1,6 @@
 import axios from 'axios';
 import global from '../global.js';
-
-////////////////// 싱글톤 패턴 분석하기 //////////////////////
+//
 // axios.defaults.baseURL = global.productURL;
 // const requestInterceptor = (axiosInstance) => {
 //     axiosInstance.interceptors.request.use(() => {
@@ -10,6 +9,16 @@ import global from '../global.js';
 //         console.log(err);
 //     });
 // }
+//
+// const responseInterceptor = (axiosInstance) => {
+//     axiosInstance.interceptors.response.use((res) => {
+//         console.log("909A");
+//         return res;
+//     }, (err) => {
+//         console.log(err);
+//     });
+// }
+//
 // const instance = {}
 // const AxiosDefault = (baseURL) => {
 //     if (!instance[baseURL]) {
@@ -28,7 +37,6 @@ import global from '../global.js';
 //     });
 // }
 // const axiosClient = AxiosDefault(global.productURL);
-////////////////////////////////////////////////////////
 
 /**
  * product 리스트를 받아오는 함수
