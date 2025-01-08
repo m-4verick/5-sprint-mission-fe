@@ -1,49 +1,34 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function BestProduct({ page = 1, size, order }) {
+export default function ProductList({ page, pageSize, orderBy }) {
   const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchList() {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          `https://panda-market-api.vercel.app/products?page=${page}&pageSize=${size}&orderBy=${order}`,
-        );
-        setList(res.data.list);
-        setLoading(false);
-      } catch (err) {
-        console.log("err: " + err);
-      }
+    async function fetchData() {
+      const res = await axios.get(
+        `https://panda-market-api.vercel.app/products?page=${page}&pageSize=${pageSize}&orderBy=${orderBy}`,
+      );
+      setList(res.data.list);
     }
 
-    fetchList();
-  }, [page, order]);
+    fetchData();
+  }, [page, orderBy]);
 
   return (
     <>
-      {loading ? (
-        <div className="flex justify-center items-center">
-          <p>상품을 불러오는 중입니다...</p>
+      {list.map((item) => (
+        <div key={item.id} className="cursor-pointer">
+          <img
+            src={item.images}
+            alt="이미지"
+            className="rounded-xl object-cover aspect-square w-full"
+          />
+          <p className="text-[14px] mt-[16px]">{item.name}</p>
+          <p className="text-[16px] font-bold mt-[6px]">{item.price}</p>
+          <p className="text-[12px] mt-[6px]">♡ {item.favoriteCount}</p>
         </div>
-      ) : (
-        list.map((item) => (
-          <div key={item.id} className="flex flex-col cursor-pointer">
-            <img
-              src={item.images}
-              alt={item.name}
-              className="rounded-lg object-cover aspect-square"
-            />
-            <p className="mt-4 text-sm">{item.name}</p>
-            <p className="mt-1.5 text-base font-bold">
-              {item.price.toLocaleString()}원
-            </p>
-            <p className="mt-1.5 text-xs">♡ {item.favoriteCount}</p>
-          </div>
-        ))
-      )}
+      ))}
     </>
   );
 }

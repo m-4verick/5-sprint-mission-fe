@@ -6,11 +6,11 @@ import Footer from "./widgets/Footer/Footer";
 function App() {
   return (
     <div role="application">
+      <Header />
       <main>
-        <Header />
         <Content />
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 }

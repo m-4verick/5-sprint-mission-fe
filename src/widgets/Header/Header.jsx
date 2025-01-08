@@ -1,18 +1,25 @@
-import logoImage from '../../assets/images/logo.png';
+import logoImage from "../../assets/images/logo.png";
+import titleOnly from "../../assets/images/titleonly.png";
+import profileImage from "../../assets/images/icon.png";
+import { useWindowWidth } from "../../shared/hooks/useWindowWidth";
 
 export default function Header() {
-    return (
-        <div className="fixed top-0 w-screen h-[70px] flex justify-between items-center border-b bg-white">
-            <div className="flex items-center ml-[200px] gap-[24px]">
-                <img src={logoImage}/>
-                <div className="text-[#4B5563] font-bold text-[18px] flex gap-[30px]">
-                    <a href="#">자유게시판</a>
-                    <a href="#">중고마켓</a>
-                </div>
-            </div>
-            <div className="mr-[200px]">
-                <button className="bg-[#3692FF] px-[23px] py-[8px] rounded-lg text-white font-bold">로그인</button>
-            </div>
+    const windowWidth = useWindowWidth();
+
+  return (
+    <div className="flex items-center justify-between w-full border-b fixed top-0 bg-white h-[70px] px-[16px] md:px-[24px] xl:px-[200px]">
+      <div className="flex items-center text-[#4B5563] font-bold text-[16px] md:text-[18px] gap-[8px] md:gap-[20px] xl:gap-[24px]">
+          { windowWidth === "mobile" && <img src={titleOnly} /> }
+          { windowWidth === "tablet" && <img src={logoImage} /> }
+          { windowWidth === "desktop" && <img src={logoImage} /> }
+        <div className="flex gap-[8px] md:gap-[30px]">
+          <a href="#">자유게시판</a>
+          <a href="#">중고마켓</a>
         </div>
-    )
+      </div>
+      {windowWidth === "desktop" && <button className="px-[23px] py-[8px] bg-[#3692FF] rounded-lg text-white font-bold">로그인</button>}
+      {windowWidth === "mobile" && <img src={profileImage} /> }
+      {windowWidth === "tablet" && <img src={profileImage} /> }
+    </div>
+  );
 }
