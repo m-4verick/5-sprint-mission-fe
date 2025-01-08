@@ -18,8 +18,7 @@ export default function Header() {
         </div>
       </div>
       {windowWidth === "desktop" && <button className="px-[23px] py-[8px] bg-[#3692FF] rounded-lg text-white font-bold">로그인</button>}
-      {windowWidth === "mobile" && <img src={profileImage} /> }
-      {windowWidth === "tablet" && <img src={profileImage} /> }
+        {windowWidth !== "desktop" && <img src={profileImage} alt="프로필" /> }
     </div>
   );
 }

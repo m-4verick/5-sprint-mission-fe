@@ -21,7 +21,7 @@ export const useWindowWidth = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setWindowWidth(window.innerWidth);
-      }, 200);
+      }, 100);
     };
 
     window.addEventListener("resize", handleResize);

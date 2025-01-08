@@ -5,7 +5,7 @@ import Footer from "./widgets/Footer/Footer";
 
 function App() {
   return (
-    <div role="application">
+    <div role="application" className="pt-[70px]">
       <Header />
       <main>
         <Content />
