@@ -1,27 +1,32 @@
 import axios from "axios";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
-export default function ProductList({page, pageSize, orderBy, keyword = "" }) {
+const imgDefault = "https://placehold.co/600x400/png?text=NO+IMAGE";
+
+export default function ProductList({ page, pageSize, orderBy, keyword = "" }) {
     const [list, setList] = useState([]);
-    const imgDefault = `https://placehold.co/600x400/png?text=NO+IMAGE`;
 
     const handleError = (e) => {
-        if (e.target.src === imgDefault) return;
-        e.target.onerror = null;
-        e.target.src = imgDefault;
+        if (e.target.src !== imgDefault) {
+            e.target.onerror = null;
+            e.target.src = imgDefault;
+        }
+    };
+
+    const fetchData = async () => {
+        try {
+            const { data } = await axios.get(
+                `https://panda-market-api.vercel.app/products?page=${page}&pageSize=${pageSize}&orderBy=${orderBy}&keyword=${keyword}`
+            );
+            setList(data.list);
+        } catch (error) {
+            console.error("에러에러", error);
+        }
     };
 
     useEffect(() => {
-        async function fetchData() {
-            const res = await axios.get(
-                `https://panda-market-api.vercel.app/products?page=${page}&pageSize=${pageSize}&orderBy=${orderBy}&keyword=${keyword}`,
-            );
-            setList(res.data.list);
-        }
-
         fetchData();
-    }, [page, orderBy, keyword]);
-
+    }, [page, orderBy, keyword, pageSize]);
 
     return (
         <>
