@@ -1,6 +1,6 @@
 import { useWindowWidth } from "../../../shared/hooks/useWindowWidth";
 
-export default function OnSaleProductNav({ orderBy, handleOrderChange }) {
+export default function OnSaleProductNav({ orderBy, handleOrderChange, handleKeyword, inputValue }) {
   const windowWidth = useWindowWidth();
 
   return (
@@ -18,6 +18,8 @@ export default function OnSaleProductNav({ orderBy, handleOrderChange }) {
               type="text"
               placeholder="검색할 상품을 입력해주세요"
               className="py-[9px] pl-[16px] w-full bg-[#F3F4F6] rounded-lg xl:pr-[107px]"
+              value={inputValue}
+              onChange={handleKeyword}
             />
             <select
               onChange={handleOrderChange}
@@ -38,6 +40,8 @@ export default function OnSaleProductNav({ orderBy, handleOrderChange }) {
               type="text"
               placeholder="검색할 상품을 입력해주세요"
               className="py-[8px] pl-[16px] pr-[70px] bg-[#F3F4F6] rounded-lg xl:pr-[107px]"
+              value={inputValue}
+              onChange={handleKeyword}
             />
             <button className="px-[23px] py-[8px] bg-[#3692FF] rounded-lg text-white font-bold">
               상품 등록하기
