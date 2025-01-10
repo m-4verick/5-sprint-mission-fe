@@ -4,15 +4,20 @@ export const useWindowWidth = () => {
   const [viewport, setViewport] = useState("mobile");
 
   useEffect(() => {
+    let timeoutId;
+
     const updateViewport = () => {
-      const width = window.innerWidth;
-      if (width <= 768) {
-        setViewport("mobile");
-      } else if (width <= 1280) {
-        setViewport("tablet");
-      } else {
-        setViewport("desktop");
-      }
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        const width = window.innerWidth;
+        if (width <= 768) {
+          setViewport("mobile");
+        } else if (width <= 1280) {
+          setViewport("tablet");
+        } else {
+          setViewport("desktop");
+        }
+      }, 100);
     };
 
     window.addEventListener("resize", updateViewport);
@@ -21,6 +26,7 @@ export const useWindowWidth = () => {
 
     return () => {
       window.removeEventListener("resize", updateViewport);
+      clearTimeout(timeoutId);
     };
   }, []);
 
