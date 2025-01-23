@@ -1,7 +1,7 @@
 import featureOne from "@/assets/images/landing/featureOne.png";
 import featureTwo from "@/assets/images/landing/featureTwo.png";
 import featureThree from "@/assets/images/landing/featureThree.png";
-import Feature from "@/pages/LandingPage/components/Features/components/Feature";
+import Feature from "@/views/LandingPage/components/Features/components/Feature";
 
 const featureData = [
   {

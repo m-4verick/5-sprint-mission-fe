@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import topBanner from "@/assets/images/landing/topBanner.png";
-import { useTopBannerHandlers } from "@/pages/LandingPage/components/TopBanner/logic/hooks/handler";
+import { useTopBannerHandlers } from "@/views/LandingPage/components/TopBanner/logic/hooks/handler";
 
 export default function TopBanner() {
   const { handleButtonClick } = useTopBannerHandlers();

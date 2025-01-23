@@ -1,6 +1,6 @@
 "use client";
-import InputSet from "@/pages/RegistrationPage/components/InputSet";
-import { useProductForm } from "@/pages/RegistrationPage/logic/hooks/useProductForm";
+import InputSet from "@/views/RegistrationPage/components/InputSet";
+import { useProductForm } from "@/views/RegistrationPage/logic/hooks/useProductForm";
 import { useState } from "react";
 
 export default function RegistrationPage() {

@@ -1,5 +1,5 @@
-import SearchNav from "@/pages/ItemsPage/components/SearchNav/SearchNav";
-import ProductList from "@/pages/ItemsPage/components/ProductList/ProductList";
+import SearchNav from "@/views/ItemsPage/components/SearchNav/SearchNav";
+import ProductList from "@/views/ItemsPage/components/ProductList/ProductList";
 
 export default function ItemsPage() {
   return (

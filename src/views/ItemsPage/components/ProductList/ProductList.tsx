@@ -1,7 +1,7 @@
 "use client";
 import mockImage from "@/assets/images/items/mockImage.png";
 import Image from "next/image";
-import useProducts from "@/pages/ItemsPage/components/ProductList/logic/hooks/useProducts";
+import useProducts from "@/views/ItemsPage/components/ProductList/logic/hooks/useProducts";
 import { useEffect } from "react";
 
 export default function ProductList() {

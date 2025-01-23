@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import zoom from "@/assets/images/items/zoom.png";
-import { useProductListHandler } from "@/pages/ItemsPage/components/ProductList/logic/hooks/useProductListHandler";
+import { useProductListHandler } from "@/views/ItemsPage/components/ProductList/logic/hooks/useProductListHandler";
 
 export default function SearchNav() {
   const { handleButtonClick } = useProductListHandler();
